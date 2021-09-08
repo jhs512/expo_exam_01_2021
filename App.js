@@ -1,14 +1,24 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { Children, useState } from "react";
 import Constants from "expo-constants";
 import tw from "tailwind-react-native-classnames";
-import { Button, Text, View } from "react-native";
-import { Provider as PaperProvider, TextInput } from "react-native-paper";
+import { Text, View } from "react-native";
+import {
+  Badge,
+  Chip,
+  Provider as PaperProvider,
+  Button,
+} from "react-native-paper";
 
 const Main = () => {
+  const [number, setNumber] = useState(0);
+
   return (
-    <View>
-      <TextInput />
+    <View style={tw`flex-row self-center mt-10`}>
+      <Button onPress={() => setNumber(number + 1)}>증가</Button>
+      <Chip mode="outlined">
+        <Text>{number}</Text>
+      </Chip>
     </View>
   );
 };
