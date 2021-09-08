@@ -11,15 +11,28 @@ import {
 } from "react-native-paper";
 
 const Main = () => {
+  const [numbers, setNumbers] = useState([]);
   const [number, setNumber] = useState(0);
 
+  const saveNumber = () => {
+    setNumbers([...numbers, number]);
+    setNumber(0);
+  };
+
   return (
-    <View style={tw`flex-row self-center mt-10`}>
-      <Button onPress={() => setNumber(number + 1)}>증가</Button>
-      <Chip mode="outlined">
-        <Text>{number}</Text>
-      </Chip>
-    </View>
+    <>
+      <View style={tw`flex-row self-center mt-10`}>
+        <Button onPress={() => setNumber(number + 1)}>증가</Button>
+        <Button onPress={() => setNumber(0)}>초기화</Button>
+        <Button onPress={saveNumber}>기록</Button>
+        <Chip mode="outlined">
+          <Text>{number}</Text>
+        </Chip>
+      </View>
+      <View>
+        <Text>{JSON.stringify(numbers)}</Text>
+      </View>
+    </>
   );
 };
 
