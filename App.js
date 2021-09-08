@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { Children, useState } from "react";
 import Constants from "expo-constants";
 import tw from "tailwind-react-native-classnames";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import {
   Badge,
   Chip,
@@ -29,9 +29,13 @@ const Main = () => {
           <Text>{number}</Text>
         </Chip>
       </View>
-      <View>
-        <Text>{JSON.stringify(numbers)}</Text>
-      </View>
+      <ScrollView>
+        {numbers.map((number, index) => (
+          <Text key={index} style={tw`p-10`}>
+            {number}
+          </Text>
+        ))}
+      </ScrollView>
     </>
   );
 };
