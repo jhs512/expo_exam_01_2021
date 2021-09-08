@@ -3,22 +3,27 @@ import React from "react";
 import Constants from "expo-constants";
 import tw from "tailwind-react-native-classnames";
 import { Button, Text, View } from "react-native";
+import { Provider as PaperProvider, TextInput } from "react-native-paper";
+
+const Main = () => {
+  return (
+    <View>
+      <TextInput />
+    </View>
+  );
+};
 
 export default function App() {
   return (
-    <View
-      style={tw.style(`bg-red-500 flex-grow items-center`, {
-        paddingTop: Constants.statusBarHeight,
-      })}
-    >
-      <Button
-        title="버튼"
-        onPress={() => {
-          console.log("HI");
-        }}
-      ></Button>
-      <Text style={tw`bg-green-500 p-10 rounded`}>잘된다!111</Text>
+    <PaperProvider>
       <StatusBar style="auto" />
-    </View>
+      <View
+        style={tw.style(`flex-grow`, {
+          paddingTop: Constants.statusBarHeight,
+        })}
+      >
+        <Main />
+      </View>
+    </PaperProvider>
   );
 }
