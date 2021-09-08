@@ -19,6 +19,10 @@ const Main = () => {
     setNumber(0);
   };
 
+  const delNumber = (index) => {
+    setNumbers(numbers.filter((number, _index) => index != _index));
+  };
+
   return (
     <>
       <View style={tw`flex-row self-center mt-10`}>
@@ -31,9 +35,11 @@ const Main = () => {
       </View>
       <ScrollView>
         {numbers.map((number, index) => (
-          <Text key={index} style={tw`p-10`}>
-            {number}
-          </Text>
+          <View key={index} style={tw`p-10 flex-row items-center`}>
+            <Text>{index + 1}</Text>
+            <Text style={tw`ml-2`}>{number}</Text>
+            <Button onPress={() => delNumber(index)}>삭제</Button>
+          </View>
         ))}
       </ScrollView>
     </>
