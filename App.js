@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { Children, useState } from "react";
 import Constants from "expo-constants";
 import tw from "tailwind-react-native-classnames";
+import produce from "immer";
 import { ScrollView, Text, View } from "react-native";
 import {
   Badge,
@@ -49,13 +50,26 @@ const Main = () => {
   const id = numbersLastId + 1;
 
   const saveNumber = () => {
-    setNumbers([...numbers, { id, number }]);
+    //setNumbers([...numbers, { id, number }]);
+    setNumbers(
+      produce(numbers, (draft) => {
+        draft.push({ id, number });
+      })
+    );
+
     setNumbersLastId(id);
     setNumber(0);
   };
 
   const delNumber = (id) => {
-    setNumbers(numbers.filter((number) => number.id != id));
+    setNumbers(
+      produce(numbers, (draft) => {
+        draft.splice(
+          draft.findIndex((num) => num.id == id),
+          1
+        );
+      })
+    );
   };
 
   return (
