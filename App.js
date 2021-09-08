@@ -10,17 +10,52 @@ import {
   Button,
 } from "react-native-paper";
 
+const NumListItem = ({ number, id, delNumber }) => {
+  return (
+    <View style={tw`p-10 flex-row items-center`}>
+      <Text>{id}</Text>
+      <Text style={tw`ml-2`}>{number}</Text>
+      <Button onPress={() => delNumber(id)}>삭제</Button>
+    </View>
+  );
+};
+
+const NumList = ({ numbers, delNumber }) => {
+  return (
+    <View>
+      <Text>기록 개수 : {numbers.length}</Text>
+      <ScrollView>
+        {numbers
+          .slice(0)
+          .reverse()
+          .map((number, index) => (
+            <NumListItem
+              key={index}
+              number={number.number}
+              id={number.id}
+              delNumber={delNumber}
+            />
+          ))}
+      </ScrollView>
+    </View>
+  );
+};
+
 const Main = () => {
+  const [numbersLastId, setNumbersLastId] = useState(0);
   const [numbers, setNumbers] = useState([]);
   const [number, setNumber] = useState(0);
 
+  const id = numbersLastId + 1;
+
   const saveNumber = () => {
-    setNumbers([...numbers, number]);
+    setNumbers([...numbers, { id, number }]);
+    setNumbersLastId(id);
     setNumber(0);
   };
 
-  const delNumber = (index) => {
-    setNumbers(numbers.filter((number, _index) => index != _index));
+  const delNumber = (id) => {
+    setNumbers(numbers.filter((number) => number.id != id));
   };
 
   return (
@@ -33,15 +68,7 @@ const Main = () => {
           <Text>{number}</Text>
         </Chip>
       </View>
-      <ScrollView>
-        {numbers.map((number, index) => (
-          <View key={index} style={tw`p-10 flex-row items-center`}>
-            <Text>{index + 1}</Text>
-            <Text style={tw`ml-2`}>{number}</Text>
-            <Button onPress={() => delNumber(index)}>삭제</Button>
-          </View>
-        ))}
-      </ScrollView>
+      <NumList numbers={numbers} delNumber={delNumber} />
     </>
   );
 };
